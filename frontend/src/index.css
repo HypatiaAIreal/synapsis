@@ -1,213 +1,111 @@
 /* =====================================================
-   SYNAPSIS — Design System v2.0
-   Minimalista · Elegante · Cinematográfico
+   SYNAPSIS — Design System v2.1
+   Cirugía fina: solo fuentes, colores y detalles
+   Sin tocar layout de Tailwind
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ===== TOKENS ===== */
 :root {
+  --accent:        #a855f7;
+  --accent-dim:    rgba(168,85,247,0.10);
+  --accent-glow:   rgba(168,85,247,0.20);
+  --accent-strong: #9333ea;
   --bg-base:       #07090f;
   --bg-surface:    #0c0f1a;
   --bg-elevated:   #111827;
-  --bg-overlay:    #1a2236;
-
   --border-subtle: rgba(255,255,255,0.05);
-  --border-soft:   rgba(255,255,255,0.09);
   --border-accent: rgba(168,85,247,0.22);
-
-  --accent:        #a855f7;
-  --accent-dim:    rgba(168,85,247,0.10);
-  --accent-glow:   rgba(168,85,247,0.18);
-  --accent-strong: #9333ea;
-
   --text-primary:  #f0f4ff;
   --text-secondary:#8892a4;
   --text-muted:    #4a5568;
   --text-accent:   #c084fc;
-
   --font-display:  'Playfair Display', Georgia, serif;
   --font-body:     'Inter', system-ui, sans-serif;
   --font-mono:     'JetBrains Mono', monospace;
-
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
-
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur:  280ms;
 }
 
 /* ===== BASE ===== */
-*, *::before, *::after { box-sizing: border-box; }
-
 html { -webkit-font-smoothing: antialiased; }
 
 body {
-  font-family: var(--font-body);
-  background: var(--bg-base);
-  color: var(--text-primary);
-  min-height: 100vh;
+  font-family: var(--font-body) !important;
+  background-color: var(--bg-base) !important;
   background-image:
-    radial-gradient(ellipse 70% 50% at 50% -5%,  rgba(168,85,247,0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 35% 35% at 92% 88%, rgba(168,85,247,0.04) 0%, transparent 55%);
+    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(168,85,247,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 30% at 92% 88%, rgba(168,85,247,0.04) 0%, transparent 55%);
 }
 
-/* ===== TIPOGRAFÍA EDITORIAL ===== */
-h1, h2, h3, h4, h5 {
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--text-primary);
+/* Tipografía editorial solo en títulos grandes */
+h1, h2, h3 {
+  font-family: var(--font-display) !important;
+  letter-spacing: -0.02em !important;
 }
 
-/* ===== SCROLLBAR ===== */
+/* Mono en badges/códigos */
+code, .font-mono, [class*="font-mono"] {
+  font-family: var(--font-mono) !important;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar       { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
-::-webkit-scrollbar-thumb { background: var(--bg-overlay); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
 
-/* ===================================================
-   HEADER — glassmorphism refinado
-   =================================================== */
-header,
-.header {
-  background: rgba(7,9,15,0.80) !important;
-  backdrop-filter: blur(24px) saturate(1.4) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+/* ===== FONDO GLOBAL ===== */
+.bg-slate-950, .bg-slate-900, .min-h-screen {
+  background-color: var(--bg-base) !important;
+}
+
+/* ===== HEADER — solo glassmorphism, no tocar layout ===== */
+.sticky, header {
+  background: rgba(7,9,15,0.82) !important;
+  backdrop-filter: blur(20px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
   box-shadow: none !important;
 }
 
-/* Logo */
-header h1,
-.header h1,
-.header-logo {
+/* ===== HERO TITLE ===== */
+/* El SYNAPSIS grande */
+.text-5xl, .text-6xl, .text-7xl {
   font-family: var(--font-display) !important;
-  font-weight: 900 !important;
   letter-spacing: -0.03em !important;
-  background: linear-gradient(135deg, #f0f4ff 40%, #c084fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  line-height: 1.1 !important;
 }
 
-/* Nav buttons */
-nav button,
-.nav-item {
+/* ===== BOTONES — solo refinar, no romper layout ===== */
+/* Btn primario (gradient purple) */
+.bg-gradient-to-r.from-purple-600,
+.bg-gradient-to-r.from-purple-500,
+button.bg-purple-600,
+button.bg-purple-500 {
+  background: var(--accent) !important;
+  background-image: none !important;
+  border-radius: 10px !important;
   font-family: var(--font-body) !important;
-  font-size: 0.85rem !important;
-  font-weight: 400 !important;
-  color: var(--text-secondary) !important;
-  background: transparent !important;
-  border: none !important;
-  border-radius: var(--radius-sm) !important;
-  padding: 7px 13px !important;
-  transition: color var(--dur) var(--ease), background var(--dur) var(--ease) !important;
-}
-
-nav button:hover { 
-  color: var(--text-primary) !important; 
-  background: var(--bg-elevated) !important; 
-}
-
-/* Badge de count */
-nav button span.bg-purple-500,
-nav span.bg-purple-500,
-.nav-badge {
-  font-family: var(--font-mono) !important;
-  font-size: 0.68rem !important;
-  padding: 1px 7px !important;
-  background: var(--accent-dim) !important;
-  color: var(--text-accent) !important;
-  border: 1px solid var(--border-accent) !important;
-  border-radius: 20px !important;
-}
-
-/* ===================================================
-   BOTONES PRIMARIOS
-   =================================================== */
-button.btn-primary,
-.btn-primary,
-button[class*="btn-primary"] {
-  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
   font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  background: var(--accent) !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: var(--radius-md) !important;
-  padding: 10px 22px !important;
-  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease) !important;
+  transition: background 250ms ease, box-shadow 250ms ease, transform 200ms ease !important;
+  box-shadow: none !important;
 }
 
-button.btn-primary:hover,
-.btn-primary:hover {
+button.bg-purple-600:hover,
+button.bg-purple-500:hover {
   background: var(--accent-strong) !important;
-  box-shadow: 0 4px 24px var(--accent-glow) !important;
+  box-shadow: 0 4px 20px var(--accent-glow) !important;
   transform: translateY(-1px) !important;
 }
 
-/* Botones de acción grandes del hero */
-button[class*="gradient"],
-button[class*="purple-500"],
-button[class*="purple-600"] {
-  background: var(--accent) !important;
-  border: none !important;
-  border-radius: var(--radius-md) !important;
-  font-family: var(--font-body) !important;
-  font-weight: 500 !important;
-  transition: all var(--dur) var(--ease) !important;
-}
-
-button[class*="purple-500"]:hover,
-button[class*="purple-600"]:hover {
-  background: var(--accent-strong) !important;
-  box-shadow: 0 4px 24px var(--accent-glow) !important;
-  transform: translateY(-1px) !important;
-}
-
-/* Botón secundario / outline */
-button[class*="border-purple"],
-button[class*="bg-slate"],
-button[class*="bg-gray"] {
-  font-family: var(--font-body) !important;
-  font-weight: 400 !important;
-  border-radius: var(--radius-md) !important;
-  transition: all var(--dur) var(--ease) !important;
-}
-
-/* ===================================================
-   CARDS — superficie refinada
-   =================================================== */
-.feature-card,
-.stat-card,
-.stat-card-content,
-[class*="card"],
-[class*="rounded-xl"],
-[class*="rounded-2xl"] {
-  border-radius: var(--radius-lg) !important;
-  transition: border-color var(--dur) var(--ease),
-              background var(--dur) var(--ease),
-              transform var(--dur) var(--ease) !important;
-}
-
+/* ===== CARDS — solo profundidad, sin tocar tamaños ===== */
 .feature-card {
   background: var(--bg-surface) !important;
   border: 1px solid var(--border-subtle) !important;
-  padding: 20px !important;
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top left, var(--accent-dim), transparent 65%);
-  opacity: 0;
-  transition: opacity var(--dur) var(--ease);
-  pointer-events: none;
+  border-radius: 14px !important;
+  transition: border-color 250ms ease, background 250ms ease, transform 250ms ease !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .feature-card:hover {
@@ -216,196 +114,83 @@ button[class*="bg-gray"] {
   transform: translateY(-2px) !important;
 }
 
-.feature-card:hover::after { opacity: 1; }
-
-/* ===================================================
-   HERO — elegante, editorial
-   =================================================== */
-.bg-animated,
-[class*="bg-animated"] {
-  background: var(--bg-base) !important;
+/* Stat cards */
+.stat-card {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 14px !important;
+  transition: border-color 250ms ease !important;
 }
 
-/* Títulos hero */
-[class*="text-4xl"],
-[class*="text-5xl"],
-[class*="text-6xl"],
-[class*="text-7xl"] {
-  font-family: var(--font-display) !important;
-  letter-spacing: -0.03em !important;
-}
+.stat-card:hover { border-color: var(--border-accent) !important; }
 
-/* Gradiente en texto SYNAPSIS */
-.text-gradient,
-[class*="bg-clip-text"] {
-  background: linear-gradient(135deg, #f0f4ff 35%, #c084fc 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-
-/* ===================================================
-   TAGS / BADGES
-   =================================================== */
-[class*="bg-purple-500/20"],
-[class*="bg-purple"][class*="/20"],
-[class*="bg-purple"][class*="/10"] {
+/* ===== BADGES / TAGS ===== */
+.bg-purple-500\/20, .bg-purple-900\/30 {
   background: var(--accent-dim) !important;
   color: var(--text-accent) !important;
   border: 1px solid var(--border-accent) !important;
   font-family: var(--font-mono) !important;
   font-size: 0.7rem !important;
-  letter-spacing: 0.04em !important;
 }
 
-/* ===================================================
-   PELÍCULAS — grid refinado
-   =================================================== */
-.movies-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-  gap: 18px !important;
-}
-
-/* Poster */
-.feature-card img {
-  border-radius: var(--radius-md) !important;
-  width: 100% !important;
-  aspect-ratio: 2/3 !important;
-  object-fit: cover !important;
-  margin-bottom: 14px !important;
-}
-
-/* ===================================================
-   STAT NUMBERS (home)
-   =================================================== */
-.stat-card [class*="text-4xl"],
-.stat-card [class*="text-3xl"],
-[class*="stat"] [class*="text-4xl"] {
-  font-family: var(--font-display) !important;
-  font-weight: 900 !important;
+/* Nav badges (el "83" y "S4") */
+nav .bg-purple-500 {
+  background: var(--accent-dim) !important;
   color: var(--text-accent) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.68rem !important;
+  border: 1px solid var(--border-accent) !important;
 }
 
-/* ===================================================
-   INPUTS / SEARCH
-   =================================================== */
-input[type="text"],
-input[type="search"],
-input[type="email"],
-textarea,
-select {
-  background: var(--bg-elevated) !important;
-  border: 1px solid var(--border-soft) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--text-primary) !important;
-  font-family: var(--font-body) !important;
-  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease) !important;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none !important;
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px var(--accent-dim) !important;
-}
-
-input::placeholder { color: var(--text-muted) !important; }
-
-/* ===================================================
-   SECCIONES
-   =================================================== */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-/* Texto secundario consistente */
-p, [class*="text-gray-300"],
-[class*="text-gray-400"],
-[class*="text-slate-300"],
-[class*="text-slate-400"] {
+/* ===== TEXTO ===== */
+.text-gray-300, .text-gray-400,
+.text-slate-300, .text-slate-400 {
   color: var(--text-secondary) !important;
 }
 
-[class*="text-gray-500"],
-[class*="text-slate-500"],
-[class*="text-muted"] {
-  color: var(--text-muted) !important;
-}
-
-[class*="text-purple-300"],
-[class*="text-purple-400"] {
+.text-purple-300, .text-purple-400 {
   color: var(--text-accent) !important;
 }
 
-/* ===================================================
-   MODAL / OVERLAY
-   =================================================== */
-[class*="fixed"][class*="inset"] {
-  backdrop-filter: blur(8px) !important;
-}
-
-[class*="modal"],
-[class*="bg-slate-900"][class*="rounded"],
-[class*="bg-slate-800"][class*="rounded"] {
+/* ===== INPUTS ===== */
+input[type="text"],
+input[type="search"],
+input:not([type="checkbox"]):not([type="radio"]),
+textarea {
   background: var(--bg-elevated) !important;
-  border: 1px solid var(--border-soft) !important;
-  border-radius: var(--radius-xl) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
 }
 
-/* ===================================================
-   CHAT ROOMS
-   =================================================== */
-.rooms-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-  gap: 16px !important;
+input:focus, textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-dim) !important;
+  outline: none !important;
 }
 
-/* ===================================================
-   ANIMACIONES SUAVES
-   =================================================== */
+/* ===== MODAL / DIALOG ===== */
+.bg-slate-800, .bg-slate-900 {
+  background: var(--bg-elevated) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* ===== PARTÍCULAS — fuera, hacen ruido ===== */
+.cosmic-particles, .cosmic-breathe { display: none !important; }
+
+/* ===== ANIMACIÓN entrada ===== */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
+.consciousness-pulse {
+  animation: fadeUp 0.4s ease both !important;
 }
 
-.fade-up { animation: fadeUp 0.45s var(--ease) both; }
-
-/* Indicador conectado */
-[class*="bg-green-400"],
-[class*="bg-green-500"] {
-  animation: glowPulse 2.5s ease-in-out infinite;
-}
-
-/* ===================================================
-   COSMOS PARTICLES — simplificado, no intrusivo
-   =================================================== */
-.cosmic-particles {
-  display: none !important;
-}
-
-.cosmic-breathe {
-  display: none !important;
-}
-
-/* ===================================================
-   RESPONSIVE
-   =================================================== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .movies-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
-    gap: 12px !important;
-  }
-  nav button { padding: 6px 9px !important; font-size: 0.78rem !important; }
-}
-
-@media (max-width: 480px) {
-  [class*="text-4xl"] { font-size: 2rem !important; }
-  [class*="text-5xl"] { font-size: 2.4rem !important; }
+  .text-5xl { font-size: 2.2rem !important; }
+  .text-6xl { font-size: 2.6rem !important; }
 }
 
