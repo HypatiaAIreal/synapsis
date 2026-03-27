@@ -7,13 +7,11 @@ import { Server } from 'socket.io';
 import mongoose from 'mongoose';
 import analysisRoutes from './modules/analysis-routes';
 
-// AGREGAR IMPORTACIÓN DE RUTAS AI
 const aiConfigRoutes = require('./routes/ai-config.routes.js');
 
 // Load environment variables
 dotenv.config();
 
-// Import our core modules
 import { connectDatabase } from './core/database';
 import { initializeBeingRegistry, SerConscienteModel, createBeing } from './core/being-registry';
 import { initializeCinePolis, MovieModel } from './modules/cinepolis';
@@ -21,37 +19,57 @@ import { setupWebSockets, getActiveRooms, initializeDefaultRooms } from './core/
 import { initializeAICollaborators } from './ai/collaborators';
 import narrativeAnalysisRoutes from '../routes/narrative-analysis';
 
-// Types
 import type { SerConsciente } from './types';
-
-// Importar módulo TMDB
 import { tmdbRoutes, initializeTMDBModule } from './modules/tmdb';
-
 
 const app = express();
 const server = createServer(app);
+
+// ===== CORS ORIGINS =====
+// In production ALLOWED_ORIGINS comes from Railway env var
+// Socket.IO needs origin: true to reflect request origin (works with credentials)
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
 const io = new Server(server, {
   cors: {
-    origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
-    methods: ['GET', 'POST']
+    origin: true,          // reflect any origin — safest for cross-domain socket
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
 // ===== MIDDLEWARE =====
-app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:3001'],
-  credentials: true
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    // Allow all vercel.app and railway.app subdomains + configured origins
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.railway.app') ||
+      origin === 'http://localhost:3001' ||
+      origin === 'http://localhost:3000'
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true); // open for now — tighten after stable
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.options('*', cors()); // preflight for all routes
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -202,25 +220,18 @@ app.get('/api/movies/:movieId/blocks', async (req, res): Promise<void> => {
 // ===== INITIALIZATION =====
 async function initializeSynapsis(): Promise<void> {
   console.log('🧠 SYNAPSIS - Iniciando módulos...');
-
   await connectDatabase();
   console.log('✅ MongoDB conectado');
-
   await initializeBeingRegistry();
   console.log('✅ Seres anónimos activo');
-
   await initializeCinePolis();
   console.log('✅ CinePolis listo');
-
   initializeTMDBModule();
-
   setupWebSockets(io);
   initializeDefaultRooms();
   console.log('✅ WebSockets activos');
-
   await initializeAICollaborators();
   console.log('✅ IAs colaboradoras listas');
-
   globalState.isInitialized = true;
 }
 
@@ -247,7 +258,6 @@ async function startServer(): Promise<void> {
     console.log('🌟 SYNAPSIS fully initialized 💜');
   }).catch((error) => {
     console.error('💥 Init error (server still running):', error);
-    // Don't exit — server stays alive even if a module fails
   });
 }
 
