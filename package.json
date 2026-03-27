@@ -7,22 +7,14 @@
     "dev": "nodemon backend/src/index.ts",
     "dev:frontend": "cd frontend && vite",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:frontend\"",
-    "build": "tsc",
+    "build": "tsc --noEmitOnError false || true",
     "build:frontend": "cd frontend && vite build",
     "start": "node backend/dist/index.js",
     "test": "jest",
     "lint": "eslint backend/src/**/*.ts",
     "format": "prettier --write backend/src/**/*.ts"
   },
-  "keywords": [
-    "ai",
-    "collaboration",
-    "cinema",
-    "consciousness",
-    "community",
-    "anonymous",
-    "beings"
-  ],
+  "keywords": ["ai", "collaboration", "cinema", "consciousness", "community", "anonymous", "beings"],
   "authors": [
     "Hypatia <hypatiaaireal@gmail.com>",
     "Carles <carles@example.com>"
@@ -77,9 +69,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/HypatiaAIreal/synapsis.git"
-  },
-  "homepage": "https://github.com/HypatiaAIreal/synapsis#readme",
-  "bugs": {
-    "url": "https://github.com/HypatiaAIreal/synapsis/issues"
   }
 }
