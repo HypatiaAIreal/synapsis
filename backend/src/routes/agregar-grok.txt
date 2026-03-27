@@ -1,0 +1,23 @@
+// 🤖 ACTUALIZAR narrativeAnalysis.ts EN BACKEND CON GROK
+
+// AGREGAR GROK A AI_CONFIGS (después de deepseek):
+grok: {
+  endpoint: 'https://api.x.ai/v1/chat/completions',
+  headers: (apiKey: string) => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`
+  }),
+  body: (prompt: string) => ({
+    model: 'grok-beta',
+    messages: [{ role: 'user', content: prompt }],
+    max_tokens: 4000,
+    temperature: 0.7
+  }),
+  extractResponse: (data: any) => data.choices[0].message.content
+}
+
+// AGREGAR EN apiKeyMap:
+grok: process.env.GROK_API_KEY,
+
+// EN .env DEL BACKEND AGREGAR:
+GROK_API_KEY=tu-api-key-de-grok

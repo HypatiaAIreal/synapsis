@@ -1,0 +1,258 @@
+/* 🎭 Estilos para Conexión Rápida */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modalContent {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header */
+.header {
+  padding: 24px 32px;
+  border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(147, 51, 234, 0.05);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.closeButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  padding: 6px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Content */
+.content {
+  padding: 32px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin: 0 0 32px 0;
+}
+
+/* Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.connectButton, .createButton {
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s;
+}
+
+.connectButton {
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  color: white;
+  box-shadow: 0 4px 20px rgba(147, 51, 234, 0.4);
+}
+
+.connectButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(147, 51, 234, 0.6);
+}
+
+.createButton {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 2px solid rgba(147, 51, 234, 0.5);
+}
+
+.createButton:hover {
+  background: rgba(147, 51, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Info Section */
+.infoSection {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+}
+
+.infoToggle {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+}
+
+.infoToggle:hover {
+  color: white;
+}
+
+.infoContent {
+  background: rgba(147, 51, 234, 0.05);
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  animation: expandInfo 0.3s ease;
+}
+
+@keyframes expandInfo {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.infoContent h3 {
+  font-size: 16px;
+  color: #9333ea;
+  margin: 0 0 16px 0;
+}
+
+.infoContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+.infoContent li {
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.infoContent li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: #9333ea;
+}
+
+.infoContent strong {
+  color: white;
+}
+
+.philosophy {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin: 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  padding: 16px 32px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(147, 51, 234, 0.2);
+  display: flex;
+  justify-content: center;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .modalContent {
+    max-width: 100%;
+    margin: 20px;
+  }
+  
+  .header {
+    padding: 20px;
+  }
+  
+  .content {
+    padding: 24px;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
+}

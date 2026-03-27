@@ -1,0 +1,30 @@
+// ACTUALIZACIÓN PARA APP.TSX - COLECCIONES HORIZONTALES
+
+// 1. Importar el nuevo componente horizontal:
+// Reemplazar:
+// import { CollectionManager } from './components/Collections/CollectionManager';
+// Por:
+import { CollectionManagerHorizontal } from './components/Collections/CollectionManagerHorizontal';
+
+// 2. En la sección de renderMovies, actualizar la estructura:
+// Buscar la sección {currentView === 'movies' && y reemplazar con:
+
+{currentView === 'movies' && (
+  <div className="movies-view">
+    {/* Colecciones horizontales siempre visibles */}
+    <CollectionManagerHorizontal 
+      movies={movies}
+      onCollectionSelect={(collectionId) => {
+        setSelectedCollectionId(collectionId);
+        console.log('Colección seleccionada:', collectionId);
+      }}
+      currentCollectionId={selectedCollectionId}
+    />
+ECHO est� desactivado.
+    {/* Grid de películas */}
+    {renderMovies()}
+  </div>
+)}
+
+// 3. Eliminar el showCollections y el panel lateral
+// Ya no necesitamos el botón de toggle ni el panel lateral

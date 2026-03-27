@@ -1,0 +1,723 @@
+/* 🌟 Estilos para el Sistema de Plantillas de Reflexión */
+
+.reflectionTemplatesModal {
+  background: #0a0a0a;
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Header */
+.header {
+  padding: 32px 40px;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.titleIcon {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6));
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(180deg); }
+}
+
+.subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* Recomendaciones de IA */
+.aiRecommendations {
+  margin: 24px 40px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(239, 68, 68, 0.1));
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 16px;
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.5); }
+}
+
+.aiHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.dismissButton {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.dismissButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.recommendationsList {
+  display: grid;
+  gap: 12px;
+}
+
+.recommendationCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.recommendationCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(251, 191, 36, 0.5);
+  transform: translateX(4px);
+}
+
+.recommendationCard svg:first-child {
+  width: 32px;
+  height: 32px;
+  color: #fbbf24;
+}
+
+.recommendationInfo {
+  flex: 1;
+}
+
+.recommendationInfo h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.recommendationInfo p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Navegación por categorías */
+.categoryNav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 24px 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.categoryButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.categoryButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent, var(--category-color));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.categoryButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--category-color);
+  transform: translateY(-2px);
+}
+
+.categoryButton:hover::before {
+  opacity: 0.1;
+}
+
+.categoryButton.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--category-color);
+  color: white;
+}
+
+.categoryButton.active::before {
+  opacity: 0.2;
+}
+
+.categoryName {
+  position: relative;
+  z-index: 1;
+}
+
+.categoryCount {
+  position: relative;
+  z-index: 1;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* Controles */
+.controls {
+  display: flex;
+  gap: 24px;
+  padding: 24px 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.searchBox:focus-within {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.searchBox svg {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.searchBox input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 16px 0;
+  outline: none;
+}
+
+.searchBox input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.complexityFilter {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.complexityFilter button {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.complexityFilter button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.complexityFilter button.active {
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  color: white;
+}
+
+/* Lista de plantillas */
+.templatesList {
+  padding: 24px 40px;
+  display: grid;
+  gap: 20px;
+  min-height: 400px;
+}
+
+.templateCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.templateCard:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.templateCard.expanded {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(147, 51, 234, 0.5);
+}
+
+.templateHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  cursor: pointer;
+}
+
+.templateIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2));
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.templateIcon svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.templateInfo {
+  flex: 1;
+}
+
+.templateInfo h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}
+
+.templateInfo p {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+.templateMeta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.templateMeta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.complexity {
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.timeEstimate svg {
+  width: 14px;
+  height: 14px;
+}
+
+.intensity {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.expandButton {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.2s;
+}
+
+.expandButton:hover {
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Contenido expandido */
+.templateContent {
+  padding: 0 24px 24px 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tag {
+  padding: 6px 12px;
+  background: rgba(147, 51, 234, 0.1);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  border-radius: 20px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.prompts {
+  margin-bottom: 20px;
+}
+
+.prompts h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.prompt {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid rgba(147, 51, 234, 0.5);
+  border-radius: 8px;
+}
+
+.promptType {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.prompt p {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.perspectives {
+  margin-bottom: 20px;
+}
+
+.perspectives h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.perspectivesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.perspective {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.perspective svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mood {
+  margin-bottom: 24px;
+}
+
+.mood h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.moodSpectrum {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.moodItem {
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(147, 51, 234, 0.1));
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.selectButton {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
+}
+
+.selectButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+}
+
+.selectButton:active {
+  transform: translateY(0);
+}
+
+/* No results */
+.noResults {
+  text-align: center;
+  padding: 80px 40px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.noResults p {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+}
+
+.noResults button {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.noResults button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Footer */
+.footer {
+  padding: 32px 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.footerInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footerInfo svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .categoryNav {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 20px;
+  }
+  
+  .controls {
+    padding: 20px;
+  }
+  
+  .templatesList {
+    padding: 20px;
+  }
+  
+  .searchBox {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 24px 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+  }
+  
+  .controls {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .searchBox {
+    width: 100%;
+  }
+  
+  .complexityFilter {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .complexityFilter button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .templateHeader {
+    padding: 20px;
+    gap: 16px;
+  }
+  
+  .templateIcon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .templateInfo h3 {
+    font-size: 18px;
+  }
+  
+  .templateInfo p {
+    font-size: 14px;
+  }
+  
+  .categoryButton {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estados especiales */
+.templateCard.selected {
+  background: rgba(147, 51, 234, 0.1);
+  border-color: #9333ea;
+}
+
+.templateCard.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Scrollbar personalizado */
+.templatesList {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.templatesList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.templatesList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.templatesList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.templatesList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Modo oscuro refinado */
+@media (prefers-color-scheme: light) {
+  .reflectionTemplatesModal {
+    background: #f9fafb;
+    color: #111827;
+  }
+  
+  /* Ajustes adicionales para modo claro si es necesario */
+}

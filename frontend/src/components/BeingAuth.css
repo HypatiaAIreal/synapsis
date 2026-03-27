@@ -1,0 +1,98 @@
+/* BeingAuth.css - Estilos para el modal centrado */
+
+.being-auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 9998;
+  cursor: pointer;
+}
+
+.being-auth-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1a1a2e;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 450px;
+  width: 90%;
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  z-index: 9999;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.being-auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.being-auth-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+.being-auth-close {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.being-auth-close:hover {
+  color: white;
+}
+
+.being-auth-description {
+  color: #e5e7eb;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.being-auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.being-auth-connect,
+.being-auth-cancel {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  font-family: inherit;
+}
+
+.being-auth-connect {
+  background-color: #9333ea;
+  color: white;
+}
+
+.being-auth-connect:hover {
+  background-color: #7c3aed;
+}
+
+.being-auth-cancel {
+  background-color: #374151;
+  color: white;
+}
+
+.being-auth-cancel:hover {
+  background-color: #4b5563;
+}

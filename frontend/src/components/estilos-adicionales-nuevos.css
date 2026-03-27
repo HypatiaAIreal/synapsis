@@ -1,0 +1,292 @@
+/* 🎨 ESTILOS ADICIONALES PARA MovieBlocks.module.css */
+
+/* ============================================
+   PESTAÑAS DE ANÁLISIS EN "MIS ANÁLISIS"
+   ============================================ */
+
+.analysisTabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+}
+
+.analysisTab {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.analysisTab:hover {
+  color: #e9d5ff;
+}
+
+.analysisTab.active {
+  color: #9333ea;
+}
+
+.analysisTab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #9333ea;
+}
+
+/* Grid de análisis narrativos */
+.narrativeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.narrativeAnalysisCard {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(147, 51, 234, 0.05));
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.narrativeAnalysisCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.2);
+  border-color: rgba(236, 72, 153, 0.4);
+}
+
+.narrativeHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.theoryBadge, .modelBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.theoryBadge {
+  background: rgba(236, 72, 153, 0.2);
+  color: #f9a8d4;
+}
+
+.modelBadge {
+  background: rgba(147, 51, 234, 0.2);
+  color: #e9d5ff;
+}
+
+.narrativeContent h4 {
+  color: #ec4899;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+}
+
+.narrativeContent time {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.narrativePreview {
+  margin-top: 1rem;
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+.narrativePreview h5 {
+  color: #f9a8d4;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.narrativePreview h6 {
+  color: #e9d5ff;
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+}
+
+.narrativePreview p {
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+.narrativeActions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.viewButton, .shareButton {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  background: transparent;
+  color: #f9a8d4;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.viewButton:hover {
+  background: rgba(236, 72, 153, 0.1);
+  transform: translateY(-1px);
+}
+
+.shareButton:hover {
+  background: rgba(147, 51, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.emptyNarrative {
+  text-align: center;
+  padding: 3rem;
+  color: #9ca3af;
+}
+
+.emptyNarrative svg {
+  color: #ec4899;
+  margin-bottom: 1rem;
+}
+
+.goToNarrativeButton {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #ec4899, #9333ea);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.goToNarrativeButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3);
+}
+
+.generateMoreButton {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: 8px;
+  color: #f9a8d4;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.generateMoreButton:hover {
+  background: rgba(236, 72, 153, 0.2);
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   FICHA TÉCNICA MEJORADA
+   ============================================ */
+
+.crewDepartments {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.crewDepartment {
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.crewDepartment:hover {
+  background: rgba(37, 99, 235, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.departmentTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3b82f6;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.crewMembers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.crewMember {
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.crewMember:last-child {
+  border-bottom: none;
+}
+
+/* ============================================
+   SISTEMA DE COLECCIONES EN APP
+   ============================================ */
+
+.collections-panel {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #1a1a1a;
+  z-index: 100;
+  overflow: hidden;
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Botón de colecciones en el header */
+.nav-item.collections {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1));
+  border: 1px solid rgba(147, 51, 234, 0.3);
+}
+
+.nav-item.collections:hover {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2));
+  border-color: rgba(147, 51, 234, 0.5);
+}

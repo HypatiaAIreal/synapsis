@@ -1,0 +1,15 @@
+// 🔧 ARREGLAR ERROR DE HOOKS EN MovieBlocks.tsx
+
+// BUSCAR esta línea (aproximadamente línea 154):
+const MovieBlocks: React.FC<MovieBlocksProps> = ({ movieId, onBack }) => {
+
+// Y JUSTO DESPUÉS de esa línea, DENTRO del componente, agregar:
+  const [movieData, setMovieData] = useState<MovieData | null>(null);
+  const [activeBlock, setActiveBlock] = useState<string>('artistic');
+  const [loading, setLoading] = useState(true);
+  const [showEditor, setShowEditor] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [savedAnalyses, setSavedAnalyses] = useState<any[]>([]);
+  const [activeAnalysisTab, setActiveAnalysisTab] = useState<'personal' | 'narrative'>('personal'); // AGREGAR ESTA LÍNEA
+
+// IMPORTANTE: Esta línea debe estar DENTRO del componente, no fuera

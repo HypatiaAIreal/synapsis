@@ -1,0 +1,386 @@
+/* 🎨 Estilos para el Selector de Metodologías - Nueva UI 3x5 */
+
+.methodology-selector-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.methodology-selector-container {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+  border: 1px solid rgba(123, 97, 255, 0.3);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 1400px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(123, 97, 255, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.methodology-selector-header {
+  padding: 30px;
+  border-bottom: 1px solid rgba(123, 97, 255, 0.2);
+  position: relative;
+}
+
+.methodology-selector-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  background: linear-gradient(45deg, #7b61ff, #b98ff3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.movie-context {
+  color: #a8a8b3;
+  font-size: 16px;
+  margin: 0;
+}
+
+.movie-context strong {
+  color: #fff;
+}
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #a8a8b3;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  color: #ff6b6b;
+  transform: rotate(90deg);
+}
+
+/* Grid de Categorías 3x5 */
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 15px;
+  padding: 20px;
+  height: 45%;
+  overflow-y: auto;
+}
+
+.category-card {
+  background: rgba(42, 42, 56, 0.8);
+  border: 1px solid rgba(123, 97, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(123, 97, 255, 0.1) 0%, transparent 70%);
+  transform: scale(0);
+  transition: transform 0.5s;
+}
+
+.category-card:hover::before {
+  transform: scale(1);
+}
+
+.category-card:hover {
+  border-color: rgba(123, 97, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(123, 97, 255, 0.2);
+}
+
+.category-card.selected {
+  background: rgba(123, 97, 255, 0.2);
+  border-color: #7b61ff;
+  box-shadow: 0 0 20px rgba(123, 97, 255, 0.4);
+}
+
+.category-card.special {
+  background: linear-gradient(135deg, rgba(185, 143, 243, 0.2), rgba(123, 97, 255, 0.2));
+  border-color: rgba(185, 143, 243, 0.5);
+}
+
+.category-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.category-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.category-description {
+  font-size: 12px;
+  color: #a8a8b3;
+  line-height: 1.4;
+}
+
+.category-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: linear-gradient(45deg, #b98ff3, #7b61ff);
+  color: #fff;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Sección de Metodologías */
+.methodologies-section {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  border-top: 1px solid rgba(123, 97, 255, 0.2);
+}
+
+.methodologies-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.methodology-count {
+  font-size: 14px;
+  color: #a8a8b3;
+  font-weight: normal;
+}
+
+.recommendations-reasoning {
+  background: rgba(123, 97, 255, 0.1);
+  border: 1px solid rgba(123, 97, 255, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.recommendations-reasoning p {
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Lista de Metodologías */
+.methodologies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 15px;
+}
+
+.methodology-item {
+  background: rgba(42, 42, 56, 0.6);
+  border: 1px solid rgba(123, 97, 255, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.methodology-item:hover {
+  background: rgba(42, 42, 56, 0.8);
+  border-color: rgba(123, 97, 255, 0.4);
+  transform: translateX(5px);
+  box-shadow: 0 5px 20px rgba(123, 97, 255, 0.2);
+}
+
+.methodology-item.recommended {
+  border-color: rgba(255, 215, 0, 0.3);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.methodology-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.methodology-icon {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.methodology-info {
+  flex: 1;
+}
+
+.methodology-info h4 {
+  margin: 0 0 4px 0;
+  color: #fff;
+  font-size: 16px;
+}
+
+.methodology-author {
+  margin: 0;
+  color: #a8a8b3;
+  font-size: 13px;
+}
+
+.recommendation-star {
+  font-size: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.methodology-description {
+  color: #e0e0e0;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+/* Metadata */
+.methodology-metadata {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.complexity-badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.complexity-badge.basic {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.4);
+}
+
+.complexity-badge.intermediate {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.complexity-badge.advanced {
+  background: rgba(255, 87, 34, 0.2);
+  color: #ff5722;
+  border: 1px solid rgba(255, 87, 34, 0.4);
+}
+
+.complexity-badge.expert {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.4);
+}
+
+.source-badge {
+  font-size: 12px;
+  color: #7b61ff;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .methodology-grid {
+    grid-template-columns: repeat(3, 1fr);
+    height: auto;
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .methodology-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .methodologies-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .methodology-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Scrollbar personalizado */
+.methodology-grid::-webkit-scrollbar,
+.methodologies-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.methodology-grid::-webkit-scrollbar-track,
+.methodologies-section::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.methodology-grid::-webkit-scrollbar-thumb,
+.methodologies-section::-webkit-scrollbar-thumb {
+  background: rgba(123, 97, 255, 0.4);
+  border-radius: 4px;
+}
+
+.methodology-grid::-webkit-scrollbar-thumb:hover,
+.methodologies-section::-webkit-scrollbar-thumb:hover {
+  background: rgba(123, 97, 255, 0.6);
+}

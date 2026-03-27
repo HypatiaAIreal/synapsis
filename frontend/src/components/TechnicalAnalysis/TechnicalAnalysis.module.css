@@ -1,0 +1,477 @@
+/* 🎬 Estilos para el Sistema de Análisis Técnico Cinematográfico */
+
+.technicalAnalysisPanel {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  padding: 24px 32px;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(59, 130, 246, 0.1));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.titleIcon {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+}
+
+.movieInfo {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 16px;
+}
+
+/* Progress Bar */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #9333ea, #3b82f6);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 12px rgba(147, 51, 234, 0.5);
+}
+
+.progressText {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 100px;
+  text-align: right;
+}
+
+/* Section Navigation */
+.sectionNav {
+  display: flex;
+  gap: 8px;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sectionNav::-webkit-scrollbar {
+  display: none;
+}
+
+.sectionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.sectionButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.sectionButton.active {
+  background: linear-gradient(135deg, #9333ea, #3b82f6);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+
+/* AI Suggestions */
+.aiSuggestions {
+  margin: 20px 32px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(239, 68, 68, 0.1));
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 12px;
+}
+
+.aiHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fbbf24;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.suggestion {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  padding-left: 24px;
+}
+
+.suggestion:last-child {
+  margin-bottom: 0;
+}
+
+/* Section Content */
+.sectionContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.sectionContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sectionContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sectionContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.sectionContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Section */
+.section {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 32px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Option Groups */
+.optionGroup {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.optionGroup:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.optionGroup h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.subGroup {
+  margin-bottom: 24px;
+}
+
+.subGroup:last-child {
+  margin-bottom: 0;
+}
+
+.subGroup h5 {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Checkbox Grid */
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+/* Custom Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.checkbox:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(2px);
+}
+
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  opacity: 0;
+}
+
+.checkbox input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  opacity: 1;
+}
+
+.checkbox input[type="checkbox"]:checked::before {
+  background: linear-gradient(135deg, #9333ea, #3b82f6);
+  border-color: transparent;
+}
+
+.checkbox input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 4px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 1;
+}
+
+.checkbox span {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.checkbox:has(input:checked) {
+  background: rgba(147, 51, 234, 0.1);
+  border-color: rgba(147, 51, 234, 0.3);
+}
+
+.checkbox:has(input:checked) span {
+  color: white;
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #9333ea, #3b82f6);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+}
+
+.saveButton:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .checkboxGrid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  
+  .sectionContent {
+    padding: 20px;
+  }
+  
+  .header {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sectionNav {
+    padding: 12px 20px;
+    gap: 6px;
+  }
+  
+  .sectionButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .optionGroup {
+    padding: 16px;
+  }
+  
+  .checkbox {
+    padding: 8px 12px;
+  }
+}
+
+/* Scrollbar personalizado para todo el panel */
+.technicalAnalysisPanel * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.technicalAnalysisPanel *::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.technicalAnalysisPanel *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.technicalAnalysisPanel *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.technicalAnalysisPanel *::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Estados especiales */
+.checkbox.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox.disabled:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: none;
+}
+
+/* Animaciones suaves */
+.optionGroup,
+.checkbox,
+.sectionButton,
+.saveButton {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tooltip (si se implementa) */
+.tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Estado de carga */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #9333ea;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

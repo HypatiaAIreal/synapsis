@@ -1,0 +1,79 @@
+      case 'personal':
+        // Usar el nuevo componente MovieAnalyses con datos mock
+        return (
+          <MovieAnalyses
+            movieId={movieId}
+            movieTitle={movieData?.title || 'Sin título'}
+            moviePoster={movieData?.poster_path ? `https://image.tmdb.org/t/p/w300${movieData.poster_path}` : undefined}
+            analyses={[
+              // Reflexiones personales
+              {
+                id: 'ref-1',
+                createdAt: new Date('2024-12-15'),
+                lastModified: new Date('2024-12-15'),
+                summary: 'Reflexiones sobre la naturaleza de la realidad y los sueños compartidos...',
+                fullContent: `# ${movieData?.title || 'Película'} y la Arquitectura de los Sueños
+
+Esta película me dejó pensando durante días. La idea de que podamos compartir experiencias y construir mundos enteros dentro de nuestra mente es fascinante.
+
+## Lo que más me impactó
+
+La relación entre los personajes principales es devastadora. Representa cómo nuestras culpas pueden manifestarse y perseguirnos.
+
+## Preguntas que me quedan
+
+- ¿Cuál es el mensaje principal?
+- ¿Importa realmente la interpretación literal?
+- ¿No es toda nuestra percepción de la realidad una construcción mental?
+
+## Conexiones personales
+
+Me recordó a momentos en mi vida donde la línea entre realidad y ficción se volvió borrosa...`,
+                wordCount: 850,
+                readingTime: 4,
+                type: 'reflection',
+                rating: 5
+              },
+              {
+                id: 'ref-2',
+                createdAt: new Date('2024-12-18'),
+                lastModified: new Date('2024-12-18'),
+                summary: 'El antagonista como espejo oscuro de nuestra sociedad...',
+                fullContent: `# El Caos Como Agente de Cambio
+
+Esta película me parece más relevante cada vez que la veo. Los personajes no son solo arquetipos, son fuerzas de la naturaleza que exponen las hipocresías de nuestra sociedad.
+
+## La Filosofía del Caos
+
+Las mejores líneas de diálogo resumen perfectamente la filosofía nihilista presente en la narrativa.
+
+## La Verdadera Tragedia
+
+La transformación de los personajes es más aterradora que cualquier elemento superficial.`,
+                wordCount: 650,
+                readingTime: 3,
+                type: 'reflection',
+                rating: 5
+              },
+              // Análisis con IA (usar los análisis guardados existentes)
+              ...savedAnalyses.filter(a => a.type === 'narrative').map(analysis => ({
+                id: analysis.id || `ai-${Date.now()}`,
+                createdAt: new Date(analysis.createdAt),
+                lastModified: new Date(analysis.createdAt),
+                methodology: analysis.theoryName || 'Análisis Narrativo',
+                aiModel: analysis.modelUsed || 'Claude-3',
+                summary: typeof analysis.content === 'string' 
+                  ? analysis.content.substring(0, 150) + '...'
+                  : 'Análisis narrativo con IA',
+                fullContent: analysis.content || '',
+                insights: analysis.insights || [],
+                wordCount: analysis.wordCount || 2000,
+                readingTime: analysis.readingTime || 8,
+                type: 'ai-analysis' as const
+              }))
+            ]}
+            onViewAnalysis={(analysisId) => {
+              console.log('Ver análisis:', analysisId);
+            }}
+          />
+        );

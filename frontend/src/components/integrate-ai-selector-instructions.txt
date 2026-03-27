@@ -1,0 +1,286 @@
+// 🔧 Actualización para integrar el Modal de Selección de IA en MovieBlocks
+
+// Este código debe agregarse en el archivo MovieBlocks.tsx
+
+// 1. Agregar import al inicio del archivo:
+import AIModelSelector from '../NarrativeAnalysis/AIModelSelector';
+
+// 2. Agregar estos estados en el componente MovieBlocks (junto a los otros useState):
+const [showAISelector, setShowAISelector] = useState(false);
+const [selectedAIModel, setSelectedAIModel] = useState<any>(null);
+
+// 3. Agregar esta función handler:
+const handleSelectAIModel = (modelId: string, modelInfo: any) => {
+  setSelectedAIModel(modelInfo);
+  setShowAISelector(false);
+  console.log('Modelo seleccionado:', modelInfo);
+};
+
+// 4. En la sección de Análisis Narrativo IA, reemplazar el contenido actual por:
+{activeBlock === 'analysis' && (
+  <div className={styles.blockContent}>
+    <div className={styles.narrativeAnalysis}>
+      <h3 className={styles.analysisTitle}>
+        <span className={styles.aiIcon}>🤖</span>
+        Análisis Narrativo IA
+      </h3>
+      <p className={styles.analysisSubtitle}>
+        Análisis con metodologías cinematográficas
+      </p>
+      
+      <div className={styles.aiSelection}>
+        <h4 className={styles.sectionTitle}>
+          <span className={styles.sparklesIcon}>✨</span>
+          Elige tu asistente de IA
+        </h4>
+        
+        {selectedAIModel ? (
+          <div className={styles.selectedModelCard}>
+            <div className={styles.modelInfo}>
+              <h5>{selectedAIModel.displayName}</h5>
+              <p>{selectedAIModel.description}</p>
+            </div>
+            <button 
+              className={styles.changeModelBtn}
+              onClick={() => setShowAISelector(true)}
+            >
+              Cambiar modelo
+            </button>
+          </div>
+        ) : (
+          <button 
+            className={`${styles.selectAIButton} ${styles.pulseAnimation}`}
+            onClick={() => setShowAISelector(true)}
+          >
+            <span className={styles.buttonIcon}>🤖</span>
+            Seleccionar asistente de IA
+          </button>
+        )}
+      </div>
+
+      {/* Metodologías de análisis */}
+      <div className={styles.methodologies}>
+        <h4 className={styles.sectionTitle}>
+          <span className={styles.bookIcon}>📖</span>
+          Selecciona la metodología de análisis
+        </h4>
+        
+        <div className={styles.methodologyGrid}>
+          <div className={styles.methodologyCard}>
+            <span className={styles.methodIcon}>🗺️</span>
+            <h5>El Viaje del Héroe</h5>
+            <p className={styles.methodAuthor}>por Joseph Campbell</p>
+            <p className={styles.methodDescription}>
+              El monomito - estructura universal del viaje heroico
+            </p>
+          </div>
+          
+          <div className={styles.methodologyCard}>
+            <span className={styles.methodIcon}>📚</span>
+            <h5>Story - Paradigma de McKee</h5>
+            <p className={styles.methodAuthor}>por Robert McKee</p>
+            <p className={styles.methodDescription}>
+              Análisis profundo de estructura, valores en conflicto y diseño narrativo
+            </p>
+          </div>
+          
+          {/* Más metodologías... */}
+        </div>
+      </div>
+
+      {selectedAIModel && (
+        <button className={styles.generateAnalysisBtn}>
+          <span className={styles.sparklesIcon}>✨</span>
+          Generar Análisis Narrativo
+        </button>
+      )}
+    </div>
+  </div>
+)}
+
+// 5. Agregar el componente del modal al final del JSX (antes del último </div>):
+<AIModelSelector
+  isOpen={showAISelector}
+  onClose={() => setShowAISelector(false)}
+  onSelectModel={handleSelectAIModel}
+  selectedModelId={selectedAIModel?.id}
+/>
+
+// 6. Agregar estos estilos en MovieBlocks.module.css:
+
+.aiSelection {
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.selectAIButton {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44fdc 50%, #6c63ff 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s;
+}
+
+.selectAIButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+}
+
+.pulseAnimation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.selectedModelCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+.modelInfo h5 {
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.modelInfo p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.changeModelBtn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #e0e7ff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.changeModelBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.methodologies {
+  margin-top: 32px;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: #e0e7ff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.methodologyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.methodologyCard {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.methodologyCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.methodIcon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.methodologyCard h5 {
+  margin: 0 0 4px 0;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.methodAuthor {
+  margin: 0 0 12px 0;
+  color: #94a3b8;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.methodDescription {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.generateAnalysisBtn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s;
+}
+
+.generateAnalysisBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.sparklesIcon {
+  font-size: 20px;
+}
+
+.bookIcon {
+  font-size: 20px;
+}
+
+.buttonIcon {
+  font-size: 24px;
+}

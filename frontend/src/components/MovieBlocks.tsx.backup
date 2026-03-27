@@ -1,0 +1,422 @@
+import React, { useState, useEffect } from 'react';
+
+// Tipos para los bloques
+interface MovieBlock {
+  id: string;
+  title: string;
+  icon: string;
+  type: 'tmdb' | 'personal' | 'community' | 'hybrid';
+  data: any;
+  canEdit: boolean;
+  isPrivate: boolean;
+}
+
+interface MovieBlocksData {
+  movieId: string;
+  movieTitle: string;
+  blocks: MovieBlock[];
+  userAnalysisCount: number;
+  communityAnalysisCount: number;
+}
+
+interface MovieBlocksProps {
+  movieId: string;
+  onBack: () => void;
+}
+
+const MovieBlocks: React.FC<MovieBlocksProps> = ({ movieId, onBack }) => {
+  const [blocksData, setBlocksData] = useState<MovieBlocksData | null>(null);
+  const [activeBlock, setActiveBlock] = useState<string>('artistic');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [newAnalysis, setNewAnalysis] = useState({ title: '', content: '', type: 'general', isPublic: false });
+  const [showAnalysisForm, setShowAnalysisForm] = useState(false);
+
+  // Cargar datos de bloques
+  useEffect(() => {
+    if (!movieId) return;
+    
+    fetchMovieBlocks();
+  }, [movieId]);
+
+  const fetchMovieBlocks = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:3000/api/movies/${movieId}/blocks?userId=demo_user`);
+      
+      if (!response.ok) {
+        throw new Error('Error cargando bloques de película');
+      }
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setBlocksData(result.data);
+      } else {
+        throw new Error(result.error || 'Error desconocido');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error desconocido');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Crear nuevo análisis
+  const handleCreateAnalysis = async () => {
+    if (!movieId || !newAnalysis.title || !newAnalysis.content) return;
+    
+    try {
+      const response = await fetch(`http://localhost:3000/api/movies/${movieId}/analysis`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          authorId: 'demo_user', // En producción esto vendría del usuario autenticado
+          title: newAnalysis.title,
+          content: newAnalysis.content,
+          type: newAnalysis.type,
+          blockId: activeBlock,
+          isPublic: newAnalysis.isPublic
+        })
+      });
+      
+      if (response.ok) {
+        // Resetear formulario
+        setNewAnalysis({ title: '', content: '', type: 'general', isPublic: false });
+        setShowAnalysisForm(false);
+        // Recargar datos
+        await fetchMovieBlocks();
+      }
+    } catch (err) {
+      console.error('Error creando análisis:', err);
+    }
+  };
+
+  // Añadir reacción a análisis
+  const handleReaction = async (analysisId: string, reactionType: string) => {
+    try {
+      await fetch(`http://localhost:3000/api/movies/${movieId}/analysis/${analysisId}/reaction`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: 'demo_user',
+          reactionType
+        })
+      });
+      
+      // Recargar datos para mostrar nueva reacción
+      await fetchMovieBlocks();
+    } catch (err) {
+      console.error('Error añadiendo reacción:', err);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto mb-4"></div>
+          <p className="text-purple-200">Cargando análisis cinematográfico...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-400 mb-4">Error: {error}</p>
+          <button onClick={onBack} className="text-purple-400 hover:text-purple-300">← Volver a películas</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!blocksData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <p className="text-purple-200">No se encontraron datos de la película</p>
+      </div>
+    );
+  }
+
+  const currentBlock = blocksData.blocks.find(block => block.id === activeBlock);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Header */}
+      <div className="bg-slate-800/50 backdrop-blur-sm border-b border-slate-700/50">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <button onClick={onBack} className="text-purple-400 hover:text-purple-300 mb-2 inline-flex items-center">
+                ← Volver a películas
+              </button>
+              <h1 className="text-3xl font-bold text-white">{blocksData.movieTitle}</h1>
+              <div className="flex items-center space-x-4 mt-2 text-sm text-slate-300">
+                <span>{blocksData.userAnalysisCount} análisis personales</span>
+                <span>•</span>
+                <span>{blocksData.communityAnalysisCount} análisis comunitarios</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          
+          {/* Navegación de Bloques */}
+          <div className="lg:col-span-1">
+            <h3 className="text-lg font-semibold text-white mb-4">Bloques de Análisis</h3>
+            <nav className="space-y-2">
+              {blocksData.blocks.map((block) => (
+                <button
+                  key={block.id}
+                  onClick={() => setActiveBlock(block.id)}
+                  className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 ${
+                    activeBlock === block.id
+                      ? 'bg-purple-600 text-white shadow-lg'
+                      : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white'
+                  }`}
+                >
+                  <span className="text-xl">{block.icon}</span>
+                  <div className="flex-1">
+                    <div className="font-medium">{block.title}</div>
+                    {block.isPrivate && (
+                      <div className="text-xs opacity-75">Privado</div>
+                    )}
+                  </div>
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          {/* Contenido del Bloque Activo */}
+          <div className="lg:col-span-3">
+            {currentBlock && (
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-white flex items-center space-x-3">
+                    <span className="text-3xl">{currentBlock.icon}</span>
+                    <span>{currentBlock.title}</span>
+                  </h2>
+                  
+                  {currentBlock.canEdit && (
+                    <button
+                      onClick={() => setShowAnalysisForm(!showAnalysisForm)}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+                    >
+                      Crear Análisis
+                    </button>
+                  )}
+                </div>
+
+                {/* Formulario de Nuevo Análisis */}
+                {showAnalysisForm && currentBlock.canEdit && (
+                  <div className="mb-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600/50">
+                    <h3 className="text-lg font-semibold text-white mb-4">Nuevo Análisis</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Título del análisis"
+                          value={newAnalysis.title}
+                          onChange={(e) => setNewAnalysis({ ...newAnalysis, title: e.target.value })}
+                          className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500"
+                        />
+                      </div>
+                      <div>
+                        <textarea
+                          placeholder="Contenido del análisis..."
+                          value={newAnalysis.content}
+                          onChange={(e) => setNewAnalysis({ ...newAnalysis, content: e.target.value })}
+                          rows={6}
+                          className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <select
+                            value={newAnalysis.type}
+                            onChange={(e) => setNewAnalysis({ ...newAnalysis, type: e.target.value })}
+                            className="px-3 py-2 bg-slate-600 border border-slate-500 rounded-lg text-white focus:outline-none focus:border-purple-500"
+                          >
+                            <option value="general">General</option>
+                            <option value="technical">Técnico</option>
+                            <option value="thematic">Temático</option>
+                            <option value="visual">Visual</option>
+                            <option value="character">Personajes</option>
+                            <option value="historical">Histórico</option>
+                            <option value="comparative">Comparativo</option>
+                          </select>
+                          
+                          <label className="flex items-center space-x-2 text-slate-300">
+                            <input
+                              type="checkbox"
+                              checked={newAnalysis.isPublic}
+                              onChange={(e) => setNewAnalysis({ ...newAnalysis, isPublic: e.target.checked })}
+                              className="rounded border-slate-500 text-purple-600 focus:ring-purple-500"
+                            />
+                            <span>Compartir con la comunidad</span>
+                          </label>
+                        </div>
+                        
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => setShowAnalysisForm(false)}
+                            className="px-4 py-2 bg-slate-600 hover:bg-slate-500 text-white rounded-lg transition-colors"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            onClick={handleCreateAnalysis}
+                            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                          >
+                            Crear Análisis
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Contenido del Bloque */}
+                <div className="space-y-6">
+                  {/* Datos TMDB */}
+                  {currentBlock.type === 'tmdb' && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {Object.entries(currentBlock.data).map(([key, value]) => (
+                        <div key={key} className="bg-slate-700/30 p-4 rounded-lg">
+                          <div className="text-sm text-purple-400 capitalize mb-1">
+                            {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
+                          </div>
+                          <div className="text-white">
+                            {Array.isArray(value) ? value.join(', ') : String(value)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Análisis de la Comunidad */}
+                  {currentBlock.type === 'community' && (
+                    <div className="space-y-4">
+                      {currentBlock.data.analyses && currentBlock.data.analyses.length > 0 ? (
+                        currentBlock.data.analyses.map((analysis: any) => (
+                          <div key={analysis.id} className="bg-slate-700/30 p-4 rounded-lg">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="font-semibold text-white">{analysis.title}</h4>
+                              <div className="flex items-center space-x-2 text-sm text-slate-400">
+                                <span>{analysis.author}</span>
+                                <span>•</span>
+                                <span>{analysis.readingTime} min lectura</span>
+                              </div>
+                            </div>
+                            <p className="text-slate-300 mb-3">{analysis.content}</p>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-4">
+                                <button
+                                  onClick={() => handleReaction(analysis.id, 'like')}
+                                  className="flex items-center space-x-1 text-slate-400 hover:text-purple-400 transition-colors"
+                                >
+                                  <span>👍</span>
+                                  <span>{analysis.reactions?.like || 0}</span>
+                                </button>
+                                <button
+                                  onClick={() => handleReaction(analysis.id, 'insightful')}
+                                  className="flex items-center space-x-1 text-slate-400 hover:text-purple-400 transition-colors"
+                                >
+                                  <span>🧠</span>
+                                  <span>{analysis.reactions?.insightful || 0}</span>
+                                </button>
+                                <button
+                                  onClick={() => handleReaction(analysis.id, 'love')}
+                                  className="flex items-center space-x-1 text-slate-400 hover:text-purple-400 transition-colors"
+                                >
+                                  <span>❤️</span>
+                                  <span>{analysis.reactions?.love || 0}</span>
+                                </button>
+                              </div>
+                              <div className="text-xs text-slate-500">
+                                {new Date(analysis.createdAt).toLocaleDateString()}
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8 text-slate-400">
+                          <p>Aún no hay análisis comunitarios para esta película.</p>
+                          <p className="text-sm mt-2">¡Sé el primero en compartir tu perspectiva!</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Análisis Personales */}
+                  {currentBlock.type === 'personal' && (
+                    <div className="space-y-4">
+                      {currentBlock.data.analyses && currentBlock.data.analyses.length > 0 ? (
+                        currentBlock.data.analyses.map((analysis: any) => (
+                          <div key={analysis.id} className="bg-slate-700/30 p-4 rounded-lg">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="font-semibold text-white">{analysis.title}</h4>
+                              <div className="flex items-center space-x-2">
+                                <span className={`text-xs px-2 py-1 rounded ${
+                                  analysis.isPublic 
+                                    ? 'bg-green-500/20 text-green-400'
+                                    : 'bg-slate-500/20 text-slate-400'
+                                }`}>
+                                  {analysis.isPublic ? 'Público' : 'Privado'}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-slate-300">{analysis.content}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8 text-slate-400">
+                          <p>Aún no has creado análisis para esta película.</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Otros tipos de bloques */}
+                  {(currentBlock.type === 'hybrid' || currentBlock.type === 'tmdb') && currentBlock.id === 'content' && (
+                    <div className="space-y-4">
+                      <div className="bg-slate-700/30 p-6 rounded-lg">
+                        <h4 className="text-lg font-semibold text-purple-400 mb-3">Sinopsis</h4>
+                        <p className="text-slate-300 leading-relaxed">{currentBlock.data.synopsis}</p>
+                      </div>
+                      
+                      {currentBlock.data.themes && (
+                        <div className="bg-slate-700/30 p-6 rounded-lg">
+                          <h4 className="text-lg font-semibold text-purple-400 mb-3">Temas Principales</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {currentBlock.data.themes.map((theme: string, index: number) => (
+                              <span key={index} className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm">
+                                {theme}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MovieBlocks;

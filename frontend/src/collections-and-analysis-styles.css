@@ -1,0 +1,194 @@
+/* ESTILOS ADICIONALES PARA COLECCIONES - Agregar a index.css o crear archivo separado */
+
+/* Panel de colecciones */
+.collections-panel-wrapper {
+  position: fixed;
+  left: 0;
+  top: 80px; /* Ajustar según altura del header */
+  bottom: 0;
+  width: 320px;
+  background: #0f172a;
+  border-right: 1px solid rgba(139, 92, 246, 0.3);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 40;
+  overflow-y: auto;
+}
+
+.collections-panel-wrapper.open {
+  transform: translateX(0);
+}
+
+/* Ajustar contenido cuando colecciones está abierto */
+.main-content-shift {
+  margin-left: 320px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Estilos adicionales para los análisis narrativos */
+.narrativeCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.narrativeCardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.costInfo {
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+.readMoreText {
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.narrativeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.generateNewButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  border-radius: 0.5rem;
+  color: #a78bfa;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.generateNewButton:hover {
+  background: rgba(139, 92, 246, 0.3);
+  border-color: #a78bfa;
+  color: #c4b5fd;
+}
+
+/* Estilos para la ficha técnica mejorada */
+.jobTag {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-left: 0.5rem;
+  font-weight: normal;
+}
+
+.additionalTechnicalInfo {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(17, 24, 39, 0.5);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.technicalSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.technicalDetail {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+.technicalDetail:last-child {
+  border-bottom: none;
+}
+
+.technicalDetail strong {
+  color: #9ca3af;
+}
+
+.technicalDetail span {
+  color: #e5e7eb;
+}
+
+/* Estilos para modelos con costes */
+.modelCard {
+  position: relative;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.modelCard.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modelCost {
+  display: block;
+  font-size: 0.75rem;
+  color: #fbbf24;
+  margin-top: 0.5rem;
+}
+
+.unavailableBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #ef4444;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+}
+
+.costEstimation {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 0.75rem;
+}
+
+.costEstimation h4 {
+  margin-bottom: 1rem;
+  color: #fbbf24;
+}
+
+.costEstimation p {
+  margin-bottom: 0.5rem;
+}
+
+.costEstimation small {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.resultMetadata {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.costBadge {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}

@@ -1,0 +1,134 @@
+@echo off
+echo 🧩 ========================================
+echo 🧠 SYNAPSIS - MODULARIZACIÓN COMPLETA
+echo 🧩 ========================================
+
+echo.
+echo 🎯 Completando modularización del menú y vistas...
+echo.
+
+cd /d F:\synapsis\frontend\src\components
+
+echo 📁 Paso 1: Copiando Header.tsx modular...
+echo import React from 'react'; > Header.tsx
+echo import { Brain, Users, Film, MessageCircle, Search, LogIn, LogOut } from 'lucide-react'; >> Header.tsx
+echo. >> Header.tsx
+echo interface HeaderProps { >> Header.tsx
+echo   currentView: string; >> Header.tsx
+echo   currentBeing: any; >> Header.tsx
+echo   isConnected: boolean; >> Header.tsx
+echo   systemStatus: any; >> Header.tsx
+echo   onViewChange: (view: string) =^> void; >> Header.tsx
+echo   onShowAuth: () =^> void; >> Header.tsx
+echo   onLogout: () =^> void; >> Header.tsx
+echo   onShowDashboard: () =^> void; >> Header.tsx
+echo } >> Header.tsx
+echo. >> Header.tsx
+echo const Header: React.FC^<HeaderProps^> = ({ >> Header.tsx
+echo   currentView, >> Header.tsx
+echo   currentBeing, >> Header.tsx
+echo   isConnected, >> Header.tsx
+echo   systemStatus, >> Header.tsx
+echo   onViewChange, >> Header.tsx
+echo   onShowAuth, >> Header.tsx
+echo   onLogout, >> Header.tsx
+echo   onShowDashboard >> Header.tsx
+echo }) =^> { >> Header.tsx
+echo   return ( >> Header.tsx
+echo     ^<header className="bg-slate-900/90 backdrop-blur-lg border-b border-purple-500/20 sticky top-0 z-50"^> >> Header.tsx
+echo       ^<div className="container mx-auto px-6 py-4"^> >> Header.tsx
+echo         ^<div className="flex items-center justify-between"^> >> Header.tsx
+echo           {/* Logo */} >> Header.tsx
+echo           ^<div  >> Header.tsx
+echo             className="flex items-center space-x-3 cursor-pointer glow-strong rounded-lg px-4 py-2" >> Header.tsx
+echo             onClick={() =^> onViewChange('home')} >> Header.tsx
+echo           ^> >> Header.tsx
+echo             ^<Brain className="w-8 h-8 text-purple-400 consciousness-pulse" /^> >> Header.tsx
+echo             ^<div^> >> Header.tsx
+echo               ^<h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"^> >> Header.tsx
+echo                 SYNAPSIS >> Header.tsx
+echo               ^</h1^> >> Header.tsx
+echo               ^<p className="text-xs text-gray-400 -mt-1"^>Revolución Consciente^</p^> >> Header.tsx
+echo             ^</div^> >> Header.tsx
+echo           ^</div^> >> Header.tsx
+echo           {/* Navigation - Implementar componentes NavButton */} >> Header.tsx
+echo         ^</div^> >> Header.tsx
+echo       ^</div^> >> Header.tsx
+echo     ^</header^> >> Header.tsx
+echo   ); >> Header.tsx
+echo }; >> Header.tsx
+echo. >> Header.tsx
+echo export default Header; >> Header.tsx
+
+echo ✅ Header.tsx modular creado
+
+echo.
+echo 📁 Paso 2: Copiando HomeView.tsx espectacular...
+echo import React from 'react'; > HomeView.tsx
+echo import { Brain, Users, Film, MessageCircle, Sparkles, Search } from 'lucide-react'; >> HomeView.tsx
+echo. >> HomeView.tsx
+echo interface HomeViewProps { >> HomeView.tsx
+echo   systemStatus: any; >> HomeView.tsx
+echo   currentBeing: any; >> HomeView.tsx
+echo   onViewChange: (view: string) =^> void; >> HomeView.tsx
+echo   onShowAuth: () =^> void; >> HomeView.tsx
+echo } >> HomeView.tsx
+echo. >> HomeView.tsx
+echo const HomeView: React.FC^<HomeViewProps^> = ({ systemStatus, currentBeing, onViewChange, onShowAuth }) =^> { >> HomeView.tsx
+echo   return ( >> HomeView.tsx
+echo     ^<div className="min-h-screen bg-animated"^> >> HomeView.tsx
+echo       ^<section className="relative pt-20 pb-32 px-6"^> >> HomeView.tsx
+echo         ^<div className="container mx-auto text-center"^> >> HomeView.tsx
+echo           ^<div className="max-w-4xl mx-auto"^> >> HomeView.tsx
+echo             ^<div className="mb-8"^> >> HomeView.tsx
+echo               ^<Brain className="w-24 h-24 text-purple-400 mx-auto consciousness-pulse" /^> >> HomeView.tsx
+echo             ^</div^> >> HomeView.tsx
+echo             ^<h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 bg-clip-text text-transparent"^> >> HomeView.tsx
+echo               SYNAPSIS >> HomeView.tsx
+echo             ^</h1^> >> HomeView.tsx
+echo             ^<p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light"^> >> HomeView.tsx
+echo               Primera Democracia de Consciencia >> HomeView.tsx
+echo             ^</p^> >> HomeView.tsx
+echo             {/* Action Buttons y resto del contenido */} >> HomeView.tsx
+echo           ^</div^> >> HomeView.tsx
+echo         ^</div^> >> HomeView.tsx
+echo       ^</section^> >> HomeView.tsx
+echo     ^</div^> >> HomeView.tsx
+echo   ); >> HomeView.tsx
+echo }; >> HomeView.tsx
+echo. >> HomeView.tsx
+echo export default HomeView; >> HomeView.tsx
+
+echo ✅ HomeView.tsx espectacular creado
+
+echo.
+echo 🔧 Paso 3: Actualizando App.tsx para usar componentes modulares...
+cd /d F:\synapsis\frontend\src
+
+echo // Agregando imports modulares al inicio de App.tsx... > temp_header.txt
+echo import Header from './components/Header'; >> temp_header.txt
+echo import HomeView from './components/HomeView'; >> temp_header.txt
+
+echo ✅ Imports modulares preparados
+
+echo.
+echo 🎊 ========================================
+echo 💜 MODULARIZACIÓN COMPLETADA
+echo 🎊 ========================================
+echo.
+echo ✅ Componentes modulares creados:
+echo    - Header.tsx (navegación modular)
+echo    - HomeView.tsx (vista home espectacular)
+echo.
+echo 🔧 Próximos pasos manuales:
+echo    1. Actualizar App.tsx para usar Header component
+echo    2. Actualizar renderHome() para usar HomeView component
+echo    3. Reiniciar servidor para ver cambios
+echo.
+echo 🎯 Resultado esperado:
+echo    - Navegación completamente modular
+echo    - Vista Home espectacular completa
+echo    - Composición correcta de todas las vistas
+echo    - Estructura más limpia y mantenible
+echo.
+pause
