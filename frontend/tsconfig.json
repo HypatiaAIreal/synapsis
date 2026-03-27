@@ -19,13 +19,14 @@
   "include": ["src"],
   "exclude": [
     "node_modules",
+    "src/ACTUALIZAR-APP-COLLECTIONS-VISUAL.tsx",
+    "src/App.BACKUP-ANTES-COLECCIONES.tsx",
+    "src/app_tsx_hybrid.ts",
     "src/components/implementar-colecciones-completo.tsx",
     "src/components/integrar-colecciones-app.tsx",
     "src/components/codigo-exacto-colecciones.tsx",
     "src/components/actualizar-mis-analisis.tsx",
     "src/components/ficha-tecnica-completa.tsx",
-    "src/components/ACTUALIZAR-APP-COLLECTIONS-VISUAL.tsx",
-    "src/App.BACKUP-ANTES-COLECCIONES.tsx",
-    "src/app_tsx_hybrid.ts"
+    "src/components/ACTUALIZAR-APP-COLLECTIONS-VISUAL.tsx"
   ]
 }
