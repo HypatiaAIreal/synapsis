@@ -1,5 +1,6 @@
-// 🤖 Componente Modal de Selección de IA para Análisis Narrativo - VERSIÓN ARREGLADA
+// 🤖 Componente Modal de Selección de IA - VERSIÓN PRODUCCIÓN
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../../config/api';
 import { X, Sparkles, Check, AlertCircle, DollarSign, Zap, Brain } from 'lucide-react';
 import styles from './AIModelSelector.module.css';
 
@@ -49,13 +50,11 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
   const loadProviders = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/ai/providers');
+      const response = await fetch(`${API_BASE_URL}/api/ai/providers`);
       const data = await response.json();
 
       if (data.success && data.providers) {
-        console.log('🤖 Modelos cargados:', data.providers);
         setProviders(data.providers);
-        // Seleccionar primer proveedor con modelos disponibles
         const firstAvailable = data.providers.find((p: Provider) => 
           p.models.some((m: Model) => m.available)
         );
@@ -75,27 +74,13 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
 
   const handleModelSelect = (model: Model) => {
     if (!model.available) {
-      // Mostrar mensaje de que el modelo no está disponible
       alert(`⚠️ ${model.displayName || model.name} no está disponible actualmente.\n\nPor favor, selecciona otro modelo.`);
       return;
     }
-    
-    console.log('✅ Modelo seleccionado:', model.id, model);
     onSelectModel(model.id, model);
   };
 
   if (!isOpen) return null;
-
-  const getProviderIcon = (providerId: string) => {
-    const icons: Record<string, string> = {
-      anthropic: '🧠',
-      openai: '🤖',
-      google: '✨',
-      xai: '🔮',
-      deepseek: '🌊'
-    };
-    return icons[providerId] || '🤖';
-  };
 
   const getProviderColor = (providerId: string) => {
     const colors: Record<string, string> = {
@@ -134,7 +119,6 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
           </div>
         ) : (
           <>
-            {/* Tabs de proveedores */}
             <div className={styles.providerTabs}>
               {providers.map((provider) => {
                 const hasAvailable = provider.models.some(m => m.available);
@@ -152,20 +136,15 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
                     <span className={styles.providerIcon}>{provider.icon}</span>
                     <span className={styles.providerName}>{provider.name}</span>
                     {hasAvailable ? (
-                      <span className={styles.availableBadge}>
-                        <Check size={14} />
-                      </span>
+                      <span className={styles.availableBadge}><Check size={14} /></span>
                     ) : (
-                      <span className={styles.unavailableBadge}>
-                        <AlertCircle size={14} />
-                      </span>
+                      <span className={styles.unavailableBadge}><AlertCircle size={14} /></span>
                     )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Lista de modelos */}
             <div className={styles.modelsList}>
               {providers
                 .find(p => p.id === selectedProvider)
@@ -175,7 +154,7 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
                     className={`${styles.modelCard} ${
                       selectedModelId === model.id ? styles.selected : ''
                     } ${!model.available ? styles.disabled : ''}`}
-                    onClick={() => handleModelSelect(model)}  // Usar la función que verifica disponibilidad
+                    onClick={() => handleModelSelect(model)}
                     style={{
                       cursor: model.available ? 'pointer' : 'not-allowed',
                       opacity: model.available ? 1 : 0.6
@@ -184,9 +163,7 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
                     <div className={styles.modelHeader}>
                       <h3>{model.displayName || model.name}</h3>
                       {selectedModelId === model.id && model.available && (
-                        <span className={styles.selectedBadge}>
-                          <Check size={16} />
-                        </span>
+                        <span className={styles.selectedBadge}><Check size={16} /></span>
                       )}
                     </div>
 
@@ -197,9 +174,7 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
                     {model.strengths && model.strengths.length > 0 && (
                       <div className={styles.modelStrengths}>
                         {model.strengths.slice(0, 3).map((strength, idx) => (
-                          <span key={idx} className={styles.strengthTag}>
-                            {strength}
-                          </span>
+                          <span key={idx} className={styles.strengthTag}>{strength}</span>
                         ))}
                       </div>
                     )}
@@ -218,7 +193,6 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
                           }
                         </span>
                       </div>
-
                       {!model.available && (
                         <div className={styles.unavailableMessage}>
                           <AlertCircle size={16} />
@@ -230,7 +204,6 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
                 ))}
             </div>
 
-            {/* Resumen del modelo seleccionado */}
             {selectedModelId && (
               <div className={styles.selectionSummary}>
                 <p>
@@ -242,7 +215,6 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
               </div>
             )}
 
-            {/* Mensaje de ayuda */}
             <div style={{
               marginTop: '16px',
               padding: '12px',
@@ -251,7 +223,7 @@ export const AIModelSelector: React.FC<AIModelSelectorProps> = ({
               fontSize: '14px',
               color: '#e9d5ff'
             }}>
-              💡 <strong>Nota:</strong> Solo puedes seleccionar modelos marcados como disponibles. 
+              💡 <strong>Nota:</strong> Solo puedes seleccionar modelos marcados como disponibles.
               Los modelos en gris requieren configuración adicional de API keys.
             </div>
           </>

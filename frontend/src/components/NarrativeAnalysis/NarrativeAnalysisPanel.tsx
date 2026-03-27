@@ -1,5 +1,6 @@
 // NarrativeAnalysisPanel.tsx - VERSIÓN ARREGLADA COMPLETAMENTE
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { API_BASE_URL } from '../../config/api';
 import { 
   ChevronDown, 
   ChevronUp, 
@@ -409,7 +410,7 @@ export const NarrativeAnalysisPanel: React.FC<NarrativeAnalysisPanelProps> = ({
   const fetchAvailableModels = async () => {
     try {
       console.log('🔄 Cargando modelos desde MongoDB Atlas...');
-      const response = await fetch('http://localhost:3000/api/ai/providers');
+      const response = await fetch(`${API_BASE_URL}/api/ai/providers`);
       const data = await response.json();
       console.log('📡 Providers desde MongoDB:', data.providers);
       
@@ -436,7 +437,7 @@ export const NarrativeAnalysisPanel: React.FC<NarrativeAnalysisPanelProps> = ({
   const loadSavedAnalyses = async () => {
     try {
       // Primero intentar cargar del backend
-      const response = await fetch(`http://localhost:3000/api/analyses/movie/${movieId}`);
+      const response = await fetch(`${API_BASE_URL}/api/analyses/movie/${movieId}`);
       if (response.ok) {
         const data = await response.json();
         setSavedAnalyses(data.analyses || []);
@@ -547,7 +548,7 @@ export const NarrativeAnalysisPanel: React.FC<NarrativeAnalysisPanelProps> = ({
 
       console.log('📤 Enviando al backend:', requestBody);
 
-      const response = await fetch('http://localhost:3000/api/ai/narrative', {
+      const response = await fetch(`${API_BASE_URL}/api/ai/narrative`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -597,7 +598,7 @@ export const NarrativeAnalysisPanel: React.FC<NarrativeAnalysisPanelProps> = ({
   const saveAnalysis = async (analysis: SavedAnalysis) => {
     try {
       // Intentar guardar en backend
-      const response = await fetch('http://localhost:3000/api/analyses', {
+      const response = await fetch(`${API_BASE_URL}/api/analyses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
