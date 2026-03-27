@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Film, Star, Calendar, Sparkles, ArrowRight, Loader, Plus, Check } from 'lucide-react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 interface Movie {
   id: number;
@@ -26,7 +27,6 @@ interface CinematecaMovie {
   analysisCount: number;
 }
 
-// Función debounce
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
@@ -55,14 +55,13 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
     "Akira", "Seven Samurai", "8½", "Vertigo"
   ]);
 
-  // Cargar películas de la cinemateca al inicio
   useEffect(() => {
     loadCinemateca();
   }, []);
 
   const loadCinemateca = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/tmdb/cinemateca?userId=demo_user');
+      const response = await axios.get(`${API_BASE_URL}/api/tmdb/cinemateca?userId=demo_user`);
       if (response.data.success) {
         const movieIds = response.data.data.map((item: CinematecaMovie) => item.movie.id);
         setCinematecaMovies(new Set(movieIds));
@@ -73,13 +72,8 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
   };
 
   const handleMovieSelect = (movie: Movie) => {
-    console.log(`🎬 Seleccionada película: ${movie.title} (ID: ${movie.id})`);
-    // Si hay callback, usarlo para navegación React
     if (onMovieSelect) {
       onMovieSelect(movie.id.toString());
-    } else {
-      // Fallback si no hay callback
-      console.warn('No se definió onMovieSelect callback');
     }
   };
 
@@ -88,14 +82,13 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
     setAddingMovie(movie.id);
     
     try {
-      const response = await axios.post('http://localhost:3000/api/tmdb/cinemateca/add', {
+      const response = await axios.post(`${API_BASE_URL}/api/tmdb/cinemateca/add`, {
         movie,
         userId: 'demo_user'
       });
       
       if (response.data.success) {
         setCinematecaMovies(prev => new Set([...prev, movie.id]));
-        console.log('✅ Película agregada a la cinemateca');
       } else {
         setError(response.data.error || 'Error al agregar película');
       }
@@ -117,7 +110,6 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
     return new Date(dateString).getFullYear().toString();
   };
 
-  // Búsqueda real con API backend TMDB
   const performSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery || searchQuery.length < 2) {
       setResults([]);
@@ -131,7 +123,7 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
     try {
       console.log(`🔍 Buscando en TMDB: "${searchQuery}"`);
       
-      const response = await axios.post('http://localhost:3000/api/tmdb/search', {
+      const response = await axios.post(`${API_BASE_URL}/api/tmdb/search`, {
         query: searchQuery,
         options: {
           region: 'ES',
@@ -139,16 +131,9 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
           page: 1
         }
       });
-      
-      console.log('📊 Respuesta TMDB:', response.data);
 
-      // if (response.data.success && response.data.data) {
-      //   const movies = response.data.data.results || [];
-      //   setResults(movies.slice(0, 8)); // Mostrar máximo 8 resultados
-      //   console.log(`✅ Encontradas ${movies.length} películas`);
-      // } 
       if (response.data.success && response.data.data) {
-        const movies = response.data.data.movies || [];  // RESTAURADO: movies como estaba antes
+        const movies = response.data.data.movies || [];
         setResults(movies.slice(0, 8));
         console.log(`✅ Mostrando ${movies.length} películas`);
       } else {
@@ -157,13 +142,7 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
       }
     } catch (error: any) {
       console.error('❌ Error buscando películas:', error);
-      
-      if (error.response?.status === 404) {
-        setError('Servicio de búsqueda no disponible. Verifica que el backend esté ejecutándose.');
-      } else {
-        setError(error.response?.data?.error || 'Error al buscar películas');
-      }
-      
+      setError(error.response?.data?.error || 'Error al buscar películas');
       setResults([]);
     } finally {
       setLoading(false);
@@ -181,7 +160,6 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
 
   return (
     <div className="search-container">
-      {/* Header */}
       <div className="search-header">
         <h1 className="search-title">
           <Sparkles className="text-purple-400 consciousness-pulse" />
@@ -193,7 +171,6 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
         </p>
       </div>
 
-      {/* Barra de búsqueda principal */}
       <div className="search-input-container">
         <input
           type="text"
@@ -211,14 +188,12 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
         )}
       </div>
 
-      {/* Error message */}
       {error && (
         <div className="max-w-4xl mx-auto mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-center">
           <p className="text-red-400">{error}</p>
         </div>
       )}
 
-      {/* Sugerencias */}
       {query.length === 0 && (
         <div className="max-w-4xl mx-auto mb-8 text-center">
           <p className="text-gray-300 mb-4">💡 Sugerencias para empezar:</p>
@@ -245,12 +220,11 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
         </div>
       )}
 
-      {/* Resultados */}
       {results.length > 0 && (
         <div className="max-w-6xl mx-auto">
           <div className="mb-6 text-center">
             <p className="text-gray-300">
-              <span className="text-purple-400 font-semibold consciousness-pulse">{results.length}</span> resultados para 
+              <span className="text-purple-400 font-semibold">{results.length}</span> resultados para 
               <span className="text-white font-semibold"> "{query}"</span>
             </p>
           </div>
@@ -259,7 +233,7 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
             {results.map((movie) => (
               <div
                 key={movie.id}
-                className="movie-card cursor-pointer transform transition-all hover:scale-[1.02]"
+                className="movie-card cursor-pointer"
                 onClick={() => handleMovieSelect(movie)}
               >
                 <img
@@ -272,9 +246,7 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
                 />
                 
                 <div className="movie-content">
-                  <h3 className="movie-title">
-                    {movie.title}
-                  </h3>
+                  <h3 className="movie-title">{movie.title}</h3>
                   
                   <div className="movie-info">
                     <div className="movie-year">
@@ -287,9 +259,7 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
                     </div>
                   </div>
 
-                  <div className="movie-overview">
-                    {movie.overview}
-                  </div>
+                  <div className="movie-overview">{movie.overview}</div>
 
                   <div className="movie-actions">
                     <button className="movie-action-btn flex-1">
@@ -298,13 +268,13 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
                     </button>
                     
                     {cinematecaMovies.has(movie.id) ? (
-                      <button className="movie-action-btn flex-shrink-0 bg-green-500/20 border-green-500/30 cursor-default">
+                      <button className="movie-action-btn flex-shrink-0" style={{background:'rgba(34,197,94,0.15)', borderColor:'rgba(34,197,94,0.3)', cursor:'default'}}>
                         <Check className="w-4 h-4" />
                         En Cinemateca
                       </button>
                     ) : (
                       <button 
-                        className="movie-action-btn flex-shrink-0 bg-purple-500/20 border-purple-500/30 hover:bg-purple-500/30"
+                        className="movie-action-btn flex-shrink-0"
                         onClick={(e) => handleAddToCinemateca(movie, e)}
                         disabled={addingMovie === movie.id}
                       >
@@ -326,29 +296,21 @@ const TMDBIntelligentSearch: React.FC<TMDBIntelligentSearchProps> = ({ onMovieSe
         </div>
       )}
 
-      {/* Estado vacío */}
       {query.length > 0 && results.length === 0 && !loading && !error && (
         <div className="text-center py-16">
-          <Film className="w-16 h-16 text-purple-400 mx-auto mb-4 consciousness-pulse" />
+          <Film className="w-16 h-16 text-purple-400 mx-auto mb-4" />
           <h3 className="text-xl font-semibold text-white mb-2">
             No se encontraron películas para "{query}"
           </h3>
-          <p className="text-gray-400">
-            Intenta con términos diferentes o busca por director/actor
-          </p>
+          <p className="text-gray-400">Intenta con términos diferentes</p>
         </div>
       )}
 
-      {/* Loading state */}
       {loading && (
         <div className="text-center py-16">
           <div className="loading mx-auto mb-4"></div>
-          <h3 className="text-xl font-semibold text-white mb-2">
-            Buscando películas...
-          </h3>
-          <p className="text-gray-400">
-            Explorando la cinemateca consciente
-          </p>
+          <h3 className="text-xl font-semibold text-white mb-2">Buscando películas...</h3>
+          <p className="text-gray-400">Explorando la cinemateca consciente</p>
         </div>
       )}
     </div>
