@@ -73,7 +73,7 @@ interface MovieBlocksProps {
 
 // 🎯 FUNCIÓN DE MAPEO INTELIGENTE
 const mapMovieData = (rawData: any): MovieData => {
-  if (rawData.original_title && rawData.release_date && rawData.runtime) {
+  if (rawData.original_title && rawData.release_date) {
     return rawData;
   }
   return {
@@ -82,7 +82,7 @@ const mapMovieData = (rawData: any): MovieData => {
     original_title: rawData.originalTitle || rawData.original_title,
     overview: rawData.plot_summary || rawData.overview,
     tagline: rawData.tagline,
-    release_date: rawData.release_date || (rawData.year ? `${rawData.year}-01-01` : null),
+    release_date: rawData.release_date || null,
     runtime: rawData.duration || rawData.runtime,
     vote_average: rawData.rating || rawData.vote_average,
     vote_count: rawData.votes || rawData.vote_count,
